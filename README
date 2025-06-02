@@ -3,3 +3,4 @@ TODO:
 - Refactor nft rules
 - Move ACL settings to a dedicated page
 - Any other improvements
+- Adjust the sing-box config to v1.11: Migrate legacy special outbounds to rule actions
