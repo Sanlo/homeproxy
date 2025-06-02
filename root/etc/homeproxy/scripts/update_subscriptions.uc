@@ -80,6 +80,9 @@ function log(...args) {
 	logfile.close();
 }
 
+let vlessCnt = 0;
+let vlessBaseLabel;
+
 function parse_uri(uri) {
 	let config, url, params;
 
@@ -315,8 +318,19 @@ function parse_uri(uri) {
 				return null;
 			}
 
+			// fix for duplicate labels
+			if (vlessCnt === 0) {
+					vlessCnt++;
+					vlessBaseLabel = url.hash ? urldecode(url.hash) : null;
+			} else if (vlessBaseLabel === urldecode(url.hash)) {
+					vlessCnt++;
+			} else {
+					vlessCnt = 1;
+					vlessBaseLabel = url.hash ? urldecode(url.hash) : null;
+			}
+
 			config = {
-				label: url.hash ? urldecode(url.hash) : null,
+				label: vlessBaseLabel + ` ${vlessCnt}`,
 				type: 'vless',
 				address: url.hostname,
 				port: url.port,
