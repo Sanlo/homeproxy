@@ -559,13 +559,6 @@ if (!isEmpty(main_node)) {
 config.inbounds = [];
 
 push(config.inbounds, {
-	type: 'direct',
-	tag: 'dns-in',
-	listen: '::',
-	listen_port: int(dns_port)
-});
-
-push(config.inbounds, {
 	type: 'mixed',
 	tag: 'mixed-in',
 	listen: '::',
@@ -759,15 +752,12 @@ if (isEmpty(config.endpoints))
 config.route = {
 	rules: [
 		{
-			inbound: 'dns-in',
+			action: 'sniff'
+		},
+		{
+			protocol: 'dns',
 			action: 'hijack-dns'
 		}
-		/*
-		 * leave for sing-box 1.13.0
-		 * {
-		 * 	action: 'sniff'
-		 * }
-		 */
 	],
 	rule_set: [],
 	auto_detect_interface: isEmpty(default_interface) ? true : null,
