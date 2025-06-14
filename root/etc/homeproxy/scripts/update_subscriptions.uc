@@ -307,10 +307,10 @@ function parse_uri(uri) {
 			params = url.searchParams;
 
 			/* Unsupported protocol */
-			if (params && params.type === 'kcp') {
+			if (params?.type === 'kcp') {
 				log(sprintf('Skipping sunsupported %s node: %s.', uri[0], urldecode(url.hash) || url.hostname));
 				return null;
-			} else if (params && params.type === 'quic' && ((params.quicSecurity && params.quicSecurity !== 'none') || !sing_features.with_quic)) {
+			} else if (params?.type === 'quic' && ((params?.quicSecurity !== 'none') || !sing_features.with_quic)) {
 				log(sprintf('Skipping sunsupported %s node: %s.', uri[0], urldecode(url.hash) || url.hostname));
 				if (!sing_features.with_quic)
 					log(sprintf('Please rebuild sing-box with %s support!', 'QUIC'));
@@ -335,15 +335,15 @@ function parse_uri(uri) {
 				address: url.hostname,
 				port: url.port,
 				uuid: url.username,
-				transport: (params.type !== 'tcp') ? params.type : null,
-				tls: (params.security in ['tls', 'xtls', 'reality']) ? '1' : '0',
-				tls_sni: params.sni,
-				tls_alpn: params.alpn ? split(urldecode(params.alpn), ',') : null,
-				tls_reality: (params.security === 'reality') ? '1' : '0',
-				tls_reality_public_key: params.pbk ? urldecode(params.pbk) : null,
-				tls_reality_short_id: params.sid,
-				tls_utls: sing_features.with_utls ? params.fp : null,
-				vless_flow: (params.security in ['tls', 'reality']) ? params.flow : null
+				transport: (params?.type !== 'tcp') ? params.type : null,
+				tls: (params?.security in ['tls', 'xtls', 'reality']) ? '1' : '0',
+				tls_sni: params?.sni,
+				tls_alpn: params?.alpn ? split(urldecode(params.alpn), ',') : null,
+				tls_reality: (params?.security === 'reality') ? '1' : '0',
+				tls_reality_public_key: params?.pbk ? urldecode(params.pbk) : null,
+				tls_reality_short_id: params?.sid,
+				tls_utls: sing_features.with_utls ? params?.fp : null,
+				vless_flow: (params?.security in ['tls', 'reality']) ? params?.flow : null
 			};
 			switch(params.type) {
 			case 'grpc':
