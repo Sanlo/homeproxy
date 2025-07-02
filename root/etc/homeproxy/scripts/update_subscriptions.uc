@@ -335,7 +335,7 @@ function parse_uri(uri) {
 				address: url.hostname,
 				port: url.port,
 				uuid: url.username,
-				transport: (params?.type !== 'tcp') ? params.type : null,
+				transport: (params?.type !== 'tcp') ? params?.type : null,
 				tls: (params?.security in ['tls', 'xtls', 'reality']) ? '1' : '0',
 				tls_sni: params?.sni,
 				tls_alpn: params?.alpn ? split(urldecode(params.alpn), ',') : null,
@@ -345,7 +345,7 @@ function parse_uri(uri) {
 				tls_utls: sing_features.with_utls ? params?.fp : null,
 				vless_flow: (params?.security in ['tls', 'reality']) ? params?.flow : null
 			};
-			switch(params.type) {
+			switch(params?.type) {
 			case 'grpc':
 				config.grpc_servicename = params.serviceName;
 				break;
